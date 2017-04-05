@@ -1,5 +1,5 @@
 # IHE_MHD_Profile_Validator
-Basic HL7 FHIR validator respecting the IHE MHD profile.
+Basic HL7 FHIR validator respecting parts of the IHE MHD profile. For more information about the profile visit: http://ihe.net/uploadedFiles/Documents/ITI/IHE_ITI_Suppl_MHD.pdf
 
 Currently it can validate two types of responses:
 * A bundle containing DocumentManifest resources
