@@ -23,6 +23,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		post("/validate/documentmanifest", (req, res) -> {
+			System.out.println("/validate/documentmanifest "+req.ip());
 			final String body = req.body();
 			try {
 				final Bundle bundle = parseBundle(body);
@@ -58,6 +59,7 @@ public class Main {
 		});
 		
 		post("/validate/documentreference", (req, res) -> {
+			System.out.println("/validate/documentreference "+req.ip());
 			final String body = req.body();
 			try {
 				final Bundle bundle = parseBundle(body);
@@ -92,7 +94,10 @@ public class Main {
 					return "Not valid! Not all DocumentReference authors have contained resources of type practitioner" + LINE_BREAK;
 				}
 				
-				final boolean allDoNotHaveACustodian = documentReferences.stream().allMatch(r -> r.getCustodian() == null);
+				final boolean allDoNotHaveACustodian = documentReferences.stream().allMatch(r -> {
+					boolean b = r.getCustodian().getReference().isEmpty();
+					return b;
+				});
 				if(!allDoNotHaveACustodian) {
 					return "Not valid! Some DocumentReference resources have a custodian" + LINE_BREAK;
 				}
@@ -102,7 +107,7 @@ public class Main {
 					return "Not valid! Some DocumentReference resources have a created" + LINE_BREAK;
 				}
 				
-				final boolean allDoNotHaveADocStatus= documentReferences.stream().allMatch(r -> r.getDocStatus() == null);
+				final boolean allDoNotHaveADocStatus= documentReferences.stream().allMatch(r -> r.getDocStatus().isEmpty());
 				if(!allDoNotHaveADocStatus) {
 					return "Not valid! Some DocumentReference resources have a doc status" + LINE_BREAK;
 				}

@@ -15,7 +15,8 @@ public class DocumentReferencePredicates {
 	
 	public static boolean hasASubject(DocumentReference m) {
 		final ResourceReferenceDt subject = m.getSubject();
-		final boolean resourceTypePatient = subject.getResource() instanceof Patient;
+		final boolean resourceTypePatient = subject.getResource() instanceof Patient || 
+				PATIENT.equals(subject.getReference().getResourceType());
 		return subject != null && resourceTypePatient;
 	}
 	
